@@ -1,0 +1,78 @@
+{% extends 'marketing/base.html' %}
+{% block head %}
+<script>
+$(document).ready(function() {
+        $( "#id_draft" ).addClass("active");
+	    $('#draft_table').DataTable( {
+
+            pageLength: 10,
+
+            order: [],
+            //
+            responsive: true,
+            dom: '<"html5buttons"B>lTfgitp',
+            buttons: [
+                { extend: 'copy'},
+                {extend: 'csv'},
+                {extend: 'excel'},
+               // {extend: 'pdf',orientation: 'landscape',
+                 //   pageSize: 'LEGAL'},
+
+                {extend: 'print',title: function () { return "Draft "; },
+                 customize: function (win){
+
+                        $(win.document.body).addClass('white-bg');
+                        $(win.document.body).css('font-size', '10px');
+
+                        $(win.document.body).find('table')
+                                .addClass('compact')
+                                .css('font-size', 'inherit')
+
+                                ;
+
+                }
+                }
+            ]
+
+
+        } );
+} );
+</script>
+
+{% endblock %}
+{% block content %}
+<h2>Drafts</h2>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover display" id="draft_table">
+            <thead>
+                <tr>
+                    <th> Subject </th>
+                    <th> Body </th>
+                    <th> Created On </th>
+                    <th> Action </th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for draft in object_list %}
+                    <tr>
+                        <td>{{draft.subject}}</td>
+                        <td>{{draft.body}}</td>
+                        <td>{{draft.created_on}}</td>
+                        <td>
+                                <a href="{% url 'marketing:compose' draft.pk %}" class="btn btn-success btn-sm">
+                                    <span class="glyphicon glyphicon-envelope"></span> Send
+                                </a>
+                                <a href="{% url 'marketing:draft-delete' draft.pk %}" class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove"></span> Delete
+                                </a>
+                        </td>
+                    </tr>
+
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

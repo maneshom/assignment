@@ -1,0 +1,82 @@
+{% extends 'marketing/base.html' %}
+{% block head %}
+<script>
+$(document).ready(function() {
+        $( "#id_contact" ).addClass("active");
+	    $('#contact_table').DataTable( {
+
+            pageLength: 10,
+
+            order: [],
+            //
+            responsive: true,
+            dom: '<"html5buttons"B>lTfgitp',
+            buttons: [
+                { extend: 'copy'},
+                {extend: 'csv'},
+                {extend: 'excel'},
+               // {extend: 'pdf',orientation: 'landscape',
+                 //   pageSize: 'LEGAL'},
+
+                {extend: 'print',title: function () { return "Contact "; },
+                 customize: function (win){
+
+                        $(win.document.body).addClass('white-bg');
+                        $(win.document.body).css('font-size', '10px');
+
+                        $(win.document.body).find('table')
+                                .addClass('compact')
+                                .css('font-size', 'inherit')
+
+                                ;
+
+                }
+                }
+            ]
+
+
+        } );
+} );
+</script>
+
+{% endblock %}
+{% block content %}
+<h2>Contacts</h2>
+    <div class="well well-lg">
+        <a href="{% url 'marketing:contact-add' %}" class="btn btn-success btn-md">
+          <span class="glyphicon glyphicon-plus"></span> Create
+        </a>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover display" id="contact_table">
+            <thead>
+                <tr>
+                    <th> Name </th>
+                    <th> Email </th>
+                    <th> Type </th>
+                    <th> Action </th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for contact in object_list %}
+                    <tr>
+                        <td>{{contact.name}}</td>
+                        <td>{{contact.email}}</td>
+                        <td>{{contact.get_recipient_type_display}}</td>
+                        <td>
+                                <a href="{% url 'marketing:contact-update' contact.pk %}" class="btn btn-success btn-sm">
+                                    <span class="glyphicon glyphicon-pencil"></span> Edit
+                                </a>
+                                <a href="{% url 'marketing:contact-delete' contact.pk %}" class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove"></span> Delete
+                                </a>
+                        </td>
+                    </tr>
+
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

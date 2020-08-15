@@ -1,0 +1,34 @@
+{% extends 'marketing/base.html' %}
+{% load crispy_forms_tags %}
+{% block head %}
+<script>
+$(document).ready(function() {
+        $( "#id_email" ).addClass("active");
+        $('#select_all_check').click(function() {
+            $('#id_contact option').prop('selected', this.checked);
+
+        });
+});
+</script>
+{% endblock %}
+{% block content %}
+<h2>Compose Email</h2>
+  <form method="post">
+    {% csrf_token %}
+    <div class="form-row">
+
+    {{ form.from_address|as_crispy_field }}
+    {{ form.contact|as_crispy_field }}
+        <p>Hold down “Control”, or “Command” on a Mac, to select more than one.</p>
+    <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="select_all_check">
+        <label class="custom-control-label" for="select_all_check">Select All</label>
+    </div>
+    {{ form.subject|as_crispy_field }}
+      {{ form.body|as_crispy_field }}
+  </div>
+
+    <button type="submit" class="btn btn-primary">Send</button>
+    <input type="submit" name="draft" value="Save to Draft">
+  </form>
+{% endblock %}

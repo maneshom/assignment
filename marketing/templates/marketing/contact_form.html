@@ -1,0 +1,16 @@
+{% extends 'marketing/base.html' %}
+{% load crispy_forms_tags %}
+{% block head %}
+<script>
+$(document).ready(function() {
+        $( "#id_contact" ).addClass("active");
+});
+</script>
+{% endblock %}
+{% block content %}
+<h2>Contact form</h2>
+<form method="post">{% csrf_token %}
+{{ form|crispy }}
+<button type="submit" class="btn btn-primary">Save</button>
+</form>
+{% endblock %}

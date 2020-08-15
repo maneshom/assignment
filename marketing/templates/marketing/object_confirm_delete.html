@@ -1,0 +1,27 @@
+{% extends 'marketing/base.html' %}
+{% load crispy_forms_tags %}
+{% block head %}
+<script>
+$(document).ready(function() {
+        $( "#id_contact" ).addClass("active");
+});
+</script>
+{% endblock %}
+{% block content %}
+<form method="post">{% csrf_token %}
+
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Confirmation</h4>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to delete "{{ object }}"?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-default" >Confirm</button>
+        </div>
+      </div>
+    </div>
+</form>
+{% endblock %}
