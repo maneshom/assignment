@@ -16,7 +16,10 @@ Quick start
   
   This server prints to standard output all email headers and the email body.User can verify the content. 
 4. Start the development server and visit http://127.0.0.1:8000/marketing/
-5. Login using username: test_user, and password: @password
+5. Login using 
+    username: test_user
+    password: @password
+    
 6. Select each menu items based on requirement
 
   
